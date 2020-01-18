@@ -6,15 +6,16 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.core.app.NotificationCompat;
@@ -30,8 +31,11 @@ public class HideService extends Service {
     WindowManager.LayoutParams windowParamsOverscan;
     WindowManager.LayoutParams windowParamsStatusbar;
 
+    private Configuration oldConfig;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        oldConfig = getResources().getConfiguration();
         inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
 
         /* Overscan Area Overlay */
@@ -99,6 +103,16 @@ public class HideService extends Service {
         windowManagerStatusbar.removeView(windowViewStatusbar);
 
         stopForeground(true);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation != oldConfig.orientation)
+        {
+            Log.d("CONFIGURATION", newConfig.toString());
+        }
+        oldConfig = newConfig;
     }
 
     @Override
