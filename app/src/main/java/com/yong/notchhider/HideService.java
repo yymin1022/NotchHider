@@ -47,7 +47,9 @@ public class HideService extends Service {
                 PixelFormat.TRANSLUCENT
         );
         windowParamsOverscan.gravity = Gravity.TOP;
-        windowParamsOverscan.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+            windowParamsOverscan.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        }
         windowViewOverscan = inflater.inflate(R.layout.window_overscan, null);
         windowManagerOverscan.addView(windowViewOverscan, windowParamsOverscan);
 
