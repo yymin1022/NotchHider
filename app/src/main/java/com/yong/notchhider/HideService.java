@@ -44,7 +44,7 @@ public class HideService extends Service {
                 WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR|
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.RGB_888
+                PixelFormat.TRANSLUCENT
         );
         windowParamsOverscan.gravity = Gravity.TOP;
         windowParamsOverscan.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
@@ -60,7 +60,7 @@ public class HideService extends Service {
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN|
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.RGB_888
+                PixelFormat.TRANSLUCENT
         );
         windowParamsStatusbar.gravity = Gravity.TOP;
         windowViewStatusbar = inflater.inflate(R.layout.window_statusbar, null);
@@ -94,6 +94,7 @@ public class HideService extends Service {
     public void onDestroy() {
         super.onDestroy();
         windowManagerOverscan.removeView(windowViewOverscan);
+        windowManagerStatusbar.removeView(windowViewStatusbar);
 
         stopForeground(true);
     }
