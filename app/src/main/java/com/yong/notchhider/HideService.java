@@ -9,10 +9,15 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.hardware.display.DisplayManager;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.OrientationEventListener;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -20,6 +25,10 @@ import android.view.WindowManager;
 import androidx.core.app.NotificationCompat;
 
 public class HideService extends Service{
+    int currentRotation = 0;
+
+    DisplayManager displayManager;
+    DisplayManager.DisplayListener displayListener;
     LayoutInflater inflater;
     NotificationCompat.Builder notificationBuilder;
     NotificationManager notificationManager;
@@ -30,23 +39,139 @@ public class HideService extends Service{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
-
+        displayManager = (DisplayManager) this.getSystemService(Context.DISPLAY_SERVICE);
         windowManager = (WindowManager)getSystemService(WINDOW_SERVICE);
-        windowParams = new WindowManager.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                180,
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN|
-                WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR|
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT
-        );
-        windowParams.gravity = Gravity.TOP;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
-            windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+
+        displayListener = new DisplayManager.DisplayListener() {
+            @Override
+            public void onDisplayAdded(int displayId) {
+
+            }
+
+            @Override
+            public void onDisplayRemoved(int displayId) {
+
+            }
+
+            @Override
+            public void onDisplayChanged(int displayId) {
+                currentRotation = windowManager.getDefaultDisplay().getRotation();
+                switch(currentRotation){
+                    case Surface.ROTATION_0:
+                        windowManager.removeView(windowView);
+                        windowParams = new WindowManager.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                180,
+                                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN|
+                                        WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR|
+                                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
+                                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                                PixelFormat.TRANSLUCENT
+                        );
+                        windowParams.gravity = Gravity.TOP;
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+                            windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+                        }
+                        windowView = inflater.inflate(R.layout.window_view_portrait, null);
+                        windowManager.addView(windowView, windowParams);
+                        break;
+                    case Surface.ROTATION_90:
+                        windowManager.removeView(windowView);
+                        windowParams = new WindowManager.LayoutParams(
+                                180,
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN|
+                                        WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR|
+                                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
+                                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                                PixelFormat.TRANSLUCENT
+                        );
+                        windowParams.gravity = Gravity.LEFT;
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+                            windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+                        }
+                        windowView = inflater.inflate(R.layout.window_view_landscape, null);
+                        windowManager.addView(windowView, windowParams);
+                        break;
+                    case Surface.ROTATION_270:
+                        windowManager.removeView(windowView);
+                        windowParams = new WindowManager.LayoutParams(
+                                180,
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN|
+                                        WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR|
+                                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
+                                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                                PixelFormat.TRANSLUCENT
+                        );
+                        windowParams.gravity = Gravity.RIGHT;
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+                            windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+                        }
+                        windowView = inflater.inflate(R.layout.window_view_landscape_reverse, null);
+                        windowManager.addView(windowView, windowParams);
+                        break;
+                }
+            }
+        };
+
+        currentRotation = windowManager.getDefaultDisplay().getRotation();
+        switch (currentRotation){
+            case Surface.ROTATION_0:
+                windowParams = new WindowManager.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        180,
+                        WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN|
+                                WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR|
+                                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
+                                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                        PixelFormat.TRANSLUCENT
+                );
+                windowParams.gravity = Gravity.TOP;
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+                    windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+                }
+                windowView = inflater.inflate(R.layout.window_view_portrait, null);
+                break;
+            case Surface.ROTATION_90:
+                windowParams = new WindowManager.LayoutParams(
+                        180,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN|
+                                WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR|
+                                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
+                                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                        PixelFormat.TRANSLUCENT
+                );
+                windowParams.gravity = Gravity.LEFT;
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+                    windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+                }
+                windowView = inflater.inflate(R.layout.window_view_landscape, null);
+                break;
+            case Surface.ROTATION_270:
+                windowParams = new WindowManager.LayoutParams(
+                        180,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN|
+                                WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR|
+                                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
+                                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                        PixelFormat.TRANSLUCENT
+                );
+                windowParams.gravity = Gravity.RIGHT;
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+                    windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+                }
+                windowView = inflater.inflate(R.layout.window_view_landscape_reverse, null);
+                break;
         }
-        windowView = inflater.inflate(R.layout.window_view_portrait, null);
         windowManager.addView(windowView, windowParams);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -70,6 +195,10 @@ public class HideService extends Service{
         if(notificationBuilder != null && notificationManager != null){
             startForeground(1379, notificationBuilder.build());
         }
+
+        if(displayListener != null){
+            displayManager.registerDisplayListener(displayListener, new Handler());
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -78,20 +207,11 @@ public class HideService extends Service{
         super.onDestroy();
         windowManager.removeView(windowView);
 
-        stopForeground(true);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            windowView = inflater.inflate(R.layout.window_view_landscape, null);
-            windowManager.updateViewLayout(windowView, windowParams);
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            windowView = inflater.inflate(R.layout.window_view_portrait, null);
-            windowManager.updateViewLayout(windowView, windowParams);
+        if(displayListener != null){
+            displayManager.unregisterDisplayListener(displayListener);
         }
+
+        stopForeground(true);
     }
 
     @Override

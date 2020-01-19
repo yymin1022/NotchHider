@@ -3,13 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@android:color/black" />
+    android:layout_height="match_parent"
+    android:gravity="end">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -24,6 +19,7 @@
             android:gravity="top">
 
             <View
+                android:scaleX="-1"
                 android:layout_width="match_parent"
                 android:layout_height="90px"
                 android:background="@drawable/window_statusbar_background" />
@@ -37,6 +33,7 @@
             android:gravity="bottom">
 
             <View
+                android:scaleX="-1"
                 android:scaleY="-1"
                 android:layout_width="match_parent"
                 android:layout_height="90px"
@@ -45,5 +42,11 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/black" />
 
 </LinearLayout>
