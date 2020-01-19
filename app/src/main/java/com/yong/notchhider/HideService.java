@@ -23,16 +23,16 @@ public class HideService extends Service{
     LayoutInflater inflater;
     NotificationCompat.Builder notificationBuilder;
     NotificationManager notificationManager;
-    View windowViewOverscan;
-    WindowManager windowManagerOverscan;
-    WindowManager.LayoutParams windowParamsOverscan;
+    View windowView;
+    WindowManager windowManager;
+    WindowManager.LayoutParams windowParams;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
 
-        windowManagerOverscan = (WindowManager)getSystemService(WINDOW_SERVICE);
-        windowParamsOverscan = new WindowManager.LayoutParams(
+        windowManager = (WindowManager)getSystemService(WINDOW_SERVICE);
+        windowParams = new WindowManager.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 180,
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
@@ -42,12 +42,12 @@ public class HideService extends Service{
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT
         );
-        windowParamsOverscan.gravity = Gravity.TOP;
+        windowParams.gravity = Gravity.TOP;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
-            windowParamsOverscan.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
-        windowViewOverscan = inflater.inflate(R.layout.window_overscan, null);
-        windowManagerOverscan.addView(windowViewOverscan, windowParamsOverscan);
+        windowView = inflater.inflate(R.layout.window_view_portrait, null);
+        windowManager.addView(windowView, windowParams);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
@@ -76,7 +76,7 @@ public class HideService extends Service{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        windowManagerOverscan.removeView(windowViewOverscan);
+        windowManager.removeView(windowView);
 
         stopForeground(true);
     }
@@ -86,9 +86,11 @@ public class HideService extends Service{
         super.onConfigurationChanged(newConfig);
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            windowManagerOverscan.removeView(windowViewOverscan);
+            windowView = inflater.inflate(R.layout.window_view_landscape, null);
+            windowManager.updateViewLayout(windowView, windowParams);
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            windowManagerOverscan.addView(windowViewOverscan, windowParamsOverscan);
+            windowView = inflater.inflate(R.layout.window_view_portrait, null);
+            windowManager.updateViewLayout(windowView, windowParams);
         }
     }
 
