@@ -3,7 +3,45 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black">
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="90px"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start">
+
+            <View
+                android:layout_width="90px"
+                android:layout_height="match_parent"
+                android:background="@drawable/window_statusbar_background" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end">
+
+            <View
+                android:scaleX="-1"
+                android:layout_width="90px"
+                android:layout_height="match_parent"
+                android:background="@drawable/window_statusbar_background" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -11,7 +11,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,29 +19,22 @@ import android.view.WindowManager;
 
 import androidx.core.app.NotificationCompat;
 
-public class HideService extends Service {
+public class HideService extends Service{
     LayoutInflater inflater;
     NotificationCompat.Builder notificationBuilder;
     NotificationManager notificationManager;
     View windowViewOverscan;
-    View windowViewStatusbar;
     WindowManager windowManagerOverscan;
-    WindowManager windowManagerStatusbar;
     WindowManager.LayoutParams windowParamsOverscan;
-    WindowManager.LayoutParams windowParamsStatusbar;
-
-    private Configuration oldConfig;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        oldConfig = getResources().getConfiguration();
         inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
 
-        /* Overscan Area Overlay */
         windowManagerOverscan = (WindowManager)getSystemService(WINDOW_SERVICE);
         windowParamsOverscan = new WindowManager.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                /*ViewGroup.LayoutParams.WRAP_CONTENT*/ 90,
+                180,
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN|
                 WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR|
@@ -56,21 +48,6 @@ public class HideService extends Service {
         }
         windowViewOverscan = inflater.inflate(R.layout.window_overscan, null);
         windowManagerOverscan.addView(windowViewOverscan, windowParamsOverscan);
-
-        /* Statusbar Area Overlay */
-        windowManagerStatusbar = (WindowManager)getSystemService(WINDOW_SERVICE);
-        windowParamsStatusbar = new WindowManager.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                /*ViewGroup.LayoutParams.WRAP_CONTENT*/ 90,
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN|
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT
-        );
-        windowParamsStatusbar.gravity = Gravity.TOP;
-        windowViewStatusbar = inflater.inflate(R.layout.window_statusbar, null);
-        windowManagerStatusbar.addView(windowViewStatusbar, windowParamsStatusbar);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
@@ -100,7 +77,6 @@ public class HideService extends Service {
     public void onDestroy() {
         super.onDestroy();
         windowManagerOverscan.removeView(windowViewOverscan);
-        windowManagerStatusbar.removeView(windowViewStatusbar);
 
         stopForeground(true);
     }
@@ -108,11 +84,12 @@ public class HideService extends Service {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation != oldConfig.orientation)
-        {
-            Log.d("CONFIGURATION", newConfig.toString());
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            windowManagerOverscan.removeView(windowViewOverscan);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            windowManagerOverscan.addView(windowViewOverscan, windowParamsOverscan);
         }
-        oldConfig = newConfig;
     }
 
     @Override
