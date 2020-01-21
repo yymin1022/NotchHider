@@ -1,6 +1,5 @@
 package com.yong.notchhider;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
@@ -18,9 +17,9 @@ import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 public class HideService extends Service{
     int currentRotation = 0;
@@ -71,7 +70,7 @@ public class HideService extends Service{
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
                             windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
                         }
-                        windowView = inflater.inflate(R.layout.window_view_portrait, null);
+                        windowView = inflater.inflate(R.layout.window_view_portrait, new LinearLayout(getApplicationContext()), false);
                         windowManager.addView(windowView, windowParams);
                         break;
                     case Surface.ROTATION_90:
@@ -86,11 +85,11 @@ public class HideService extends Service{
                                         WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                                 PixelFormat.TRANSLUCENT
                         );
-                        windowParams.gravity = Gravity.LEFT;
+                        windowParams.gravity = Gravity.START;
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
                             windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
                         }
-                        windowView = inflater.inflate(R.layout.window_view_landscape, null);
+                        windowView = inflater.inflate(R.layout.window_view_landscape, new LinearLayout(getApplicationContext()), false);
                         windowManager.addView(windowView, windowParams);
                         break;
                     case Surface.ROTATION_270:
@@ -105,11 +104,11 @@ public class HideService extends Service{
                                         WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                                 PixelFormat.TRANSLUCENT
                         );
-                        windowParams.gravity = Gravity.RIGHT;
+                        windowParams.gravity = Gravity.END;
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
                             windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
                         }
-                        windowView = inflater.inflate(R.layout.window_view_landscape_reverse, null);
+                        windowView = inflater.inflate(R.layout.window_view_landscape_reverse, new LinearLayout(getApplicationContext()), false);
                         windowManager.addView(windowView, windowParams);
                         break;
                 }
@@ -133,7 +132,7 @@ public class HideService extends Service{
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
                     windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
                 }
-                windowView = inflater.inflate(R.layout.window_view_portrait, null);
+                windowView = inflater.inflate(R.layout.window_view_portrait, new LinearLayout(getApplicationContext()), false);
                 break;
             case Surface.ROTATION_90:
                 windowParams = new WindowManager.LayoutParams(
@@ -146,11 +145,11 @@ public class HideService extends Service{
                                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                         PixelFormat.TRANSLUCENT
                 );
-                windowParams.gravity = Gravity.LEFT;
+                windowParams.gravity = Gravity.START;
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
                     windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
                 }
-                windowView = inflater.inflate(R.layout.window_view_landscape, null);
+                windowView = inflater.inflate(R.layout.window_view_landscape, new LinearLayout(getApplicationContext()), false);
                 break;
             case Surface.ROTATION_270:
                 windowParams = new WindowManager.LayoutParams(
@@ -163,11 +162,11 @@ public class HideService extends Service{
                                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                         PixelFormat.TRANSLUCENT
                 );
-                windowParams.gravity = Gravity.RIGHT;
+                windowParams.gravity = Gravity.END;
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
                     windowParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
                 }
-                windowView = inflater.inflate(R.layout.window_view_landscape_reverse, null);
+                windowView = inflater.inflate(R.layout.window_view_landscape_reverse, new LinearLayout(this), false);
                 break;
         }
         windowManager.addView(windowView, windowParams);
