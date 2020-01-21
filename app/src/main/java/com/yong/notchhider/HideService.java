@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 public class HideService extends Service{
     int currentRotation = 0;
@@ -172,21 +173,21 @@ public class HideService extends Service{
         windowManager.addView(windowView, windowParams);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationChannel channel = new NotificationChannel("RunningBackground", "Channel Name", NotificationManager.IMPORTANCE_MIN);
-            channel.setImportance(NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setImportance(NotificationManager.IMPORTANCE_MIN);
             channel.setDescription("Channel Description");
             if(notificationManager != null) {
                 notificationManager.createNotificationChannel(channel);
             }
         }
         notificationBuilder = new NotificationCompat.Builder(getApplicationContext(), "RunningBackground")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
+                .setSmallIcon(R.drawable.ic_noti)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_noti))
                 .setContentTitle("Notification Title")
                 .setContentText("Notification Content")
                 .setOngoing(true)
-                .setPriority(Notification.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_MIN)
                 .setAutoCancel(false);
         notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         if(notificationBuilder != null && notificationManager != null){
