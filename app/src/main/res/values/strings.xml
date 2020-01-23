@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">NotchHider</string>
+
+    <string name="main_btn_start">Start</string>
+    <string name="main_btn_stop">Stop</string>
+
+    <string name="noti_channel_description">This is for Background Notification.</string>
+    <string name="noti_channel_id">RunningBackground</string>
+    <string name="noti_channel_name">Background Notification</string>
+    <string name="noti_content_text">Notch is Hidden</string>
+    <string name="noti_content_title">Notch Hider</string>
+
+    <string name="permission_btn_done">Done</string>
+    <string name="permission_btn_grant">Grant Permission</string>
+    <string name="permission_btn_next">Next Step</string>
+    <string name="permission_btn_previous">Previous Step</string>
+    <string name="permission_text_first_description">Before using app, please run the script.\nIf done, go to Next Step.</string>
+    <string name="permission_text_second_description">Please grant DRAW OVER APPS permission to use this application.</string>
 </resources>

@@ -17,12 +17,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Before using app, please run the script.\nIf done, go to Next Step." />
+            android:text="@string/permission_text_first_description" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Next Step"
+            android:text="@string/permission_btn_next"
             android:id="@+id/permission_btn_next"/>
 
     </LinearLayout>
@@ -38,24 +38,24 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Please grant DRAW OVER APPS permission to use this application." />
+            android:text="@string/permission_text_second_description" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Grant Permission"
+            android:text="@string/permission_btn_grant"
             android:id="@+id/permisson_btn_grant"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Previous Step"
+            android:text="@string/permission_btn_previous"
             android:id="@+id/permission_btn_prev"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Done"
+            android:text="@string/permission_btn_done"
             android:id="@+id/permisson_btn_done"
             android:enabled="false"/>
 

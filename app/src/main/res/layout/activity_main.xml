@@ -9,13 +9,13 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start"
+        android:text="@string/main_btn_start"
         android:id="@+id/main_btn_start"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stop"
+        android:text="@string/main_btn_stop"
         android:id="@+id/main_btn_stop"/>
 
 </LinearLayout>

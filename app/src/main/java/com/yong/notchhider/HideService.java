@@ -173,18 +173,18 @@ public class HideService extends Service{
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            NotificationChannel channel = new NotificationChannel("RunningBackground", "Channel Name", NotificationManager.IMPORTANCE_MIN);
+            NotificationChannel channel = new NotificationChannel(getString(R.string.noti_channel_id), getString(R.string.noti_channel_name), NotificationManager.IMPORTANCE_MIN);
             channel.setImportance(NotificationManager.IMPORTANCE_MIN);
-            channel.setDescription("Channel Description");
+            channel.setDescription(getString(R.string.noti_channel_description));
             if(notificationManager != null) {
                 notificationManager.createNotificationChannel(channel);
             }
         }
-        notificationBuilder = new NotificationCompat.Builder(getApplicationContext(), "RunningBackground")
+        notificationBuilder = new NotificationCompat.Builder(getApplicationContext(), getString(R.string.noti_channel_id))
                 .setSmallIcon(R.drawable.ic_noti)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_noti))
-                .setContentTitle("Notification Title")
-                .setContentText("Notification Content")
+                .setContentTitle(getString(R.string.noti_content_title))
+                .setContentText(getString(R.string.noti_content_text))
                 .setOngoing(true)
                 .setPriority(NotificationCompat.PRIORITY_MIN)
                 .setAutoCancel(false);
