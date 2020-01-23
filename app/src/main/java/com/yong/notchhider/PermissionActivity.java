@@ -36,6 +36,11 @@ public class PermissionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 switch(view.getId()){
                     case R.id.permisson_btn_done:
+                        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+                        SharedPreferences.Editor ed = prefs.edit();
+                        ed.putBoolean("isFirst", false);
+                        ed.apply();
+
                         finish();
                         break;
                     case R.id.permisson_btn_grant:
