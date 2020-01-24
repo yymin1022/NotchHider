@@ -209,7 +209,7 @@ public class HideService extends Service{
         if(displayListener != null){
             displayManager.unregisterDisplayListener(displayListener);
         }
-        
+
         stopForeground(true);
     }
 

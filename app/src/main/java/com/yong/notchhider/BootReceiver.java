@@ -1,17 +1,21 @@
 package com.yong.notchhider;
 
 import android.content.*;
-import android.util.Log;
+import android.os.Build;
 
 public class BootReceiver extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
         if(intent.getAction() != null && intent.getAction().equals("android.intent.action.BOOT_COMPLETED")){
-            Log.d("HELLO", "BOOT RECEIVED");
-
             SharedPreferences prefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+
             if(prefs.getBoolean("isStarted", false)){
-                context.startService(new Intent(context, HideService.class));
+                Intent serviceIntent = new Intent(context, HideService.class);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                    context.startForegroundService(serviceIntent);
+                }else{
+                    context.startService(serviceIntent);
+                }
             }
         }
     }
