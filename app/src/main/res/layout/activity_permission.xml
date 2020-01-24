@@ -7,19 +7,25 @@
     android:gravity="center">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/permission_text_description" />
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="@string/permission_text_description"
+        android:textSize="20sp"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:text="@string/permission_btn_grant"
         android:id="@+id/permisson_btn_grant"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/permission_btn_done"
         android:id="@+id/permisson_btn_done"
         android:enabled="false"/>
