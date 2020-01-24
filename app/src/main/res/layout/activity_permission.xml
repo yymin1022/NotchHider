@@ -1,64 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center">
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:id="@+id/permission_layout_first">
+        android:layout_height="wrap_content"
+        android:text="@string/permission_text_description" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/permission_text_first_description" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/permission_btn_next"
-            android:id="@+id/permission_btn_next"/>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:id="@+id/permission_layout_second">
+        android:layout_height="wrap_content"
+        android:text="@string/permission_btn_grant"
+        android:id="@+id/permisson_btn_grant"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/permission_text_second_description" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/permission_btn_done"
+        android:id="@+id/permisson_btn_done"
+        android:enabled="false"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/permission_btn_grant"
-            android:id="@+id/permisson_btn_grant"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/permission_btn_previous"
-            android:id="@+id/permission_btn_prev"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/permission_btn_done"
-            android:id="@+id/permisson_btn_done"
-            android:enabled="false"/>
-
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

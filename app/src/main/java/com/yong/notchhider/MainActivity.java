@@ -54,14 +54,14 @@ public class MainActivity extends AppCompatActivity {
         TextView tvInfo = findViewById(R.id.main_text_info);
 
         ivNotch.setImageResource(R.drawable.ic_service_off);
-        tvInfo.setText("OFF");
+        tvInfo.setText(getString(R.string.main_text_off));
         isRunning = false;
 
         if(manager != null){
             for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
                 if (HideService.class.getName().equals(service.service.getClassName())) {
                     ivNotch.setImageResource(R.drawable.ic_service_on);
-                    tvInfo.setText("ON");
+                    tvInfo.setText(getString(R.string.main_text_on));
                     isRunning = true;
                 }
             }

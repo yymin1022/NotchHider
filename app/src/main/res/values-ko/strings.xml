@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NotchHider</string>
+    <string name="main_text_description">화면을 터치화면 Notch Hider가 활성화/비활성화됩니다.</string>
+    <string name="main_text_off">Notch Hider가 비활성화되었습니다.</string>
+    <string name="main_text_on">Notch Hider가 활성화되었습니다.</string>
+    <string name="noti_channel_description">애플리케이션이 백그라운드에서 동작중일 때 표시됩니다.</string>
+    <string name="noti_channel_id">백그라운드 동작</string>
+    <string name="noti_channel_name">백그라운드 동작 알림</string>
+    <string name="noti_content_text">노치가 가려졌습니다.</string>
+    <string name="permission_btn_done">완료</string>
+    <string name="permission_btn_grant">권한 허용하기</string>
+    <string name="permission_text_description">애플리케이션의 올바른 동작을 위해 \"다른 앱 위에 그리기\" 권한이 허용되어야합니다.</string>
+</resources>
