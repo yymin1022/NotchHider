@@ -17,7 +17,10 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
-    Boolean isRunning = false;
+    boolean isRunning = false;
+
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         LinearLayout mainLayout = findViewById(R.id.main_layout);
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        editor = prefs.edit();
 
         if(prefs.getBoolean("isFirst", true)){
             startActivity(new Intent(this, PermissionActivity.class));
@@ -39,8 +43,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(isRunning){
                     stopService(new Intent(getApplicationContext(), HideService.class));
+
+                    editor.putBoolean("isStarted", false);
+                    editor.apply();
                 }else{
                     startService(new Intent(getApplicationContext(), HideService.class));
+
+                    editor.putBoolean("isStarted", true);
+                    editor.apply();
                 }
                 updateView();
             }

@@ -176,11 +176,6 @@ public class HideService extends Service{
             displayManager.registerDisplayListener(displayListener, new Handler());
         }
 
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("isStarted", true);
-        editor.apply();
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationChannel channel = new NotificationChannel(getString(R.string.noti_channel_id), getString(R.string.noti_channel_name), NotificationManager.IMPORTANCE_MIN);
@@ -214,12 +209,7 @@ public class HideService extends Service{
         if(displayListener != null){
             displayManager.unregisterDisplayListener(displayListener);
         }
-
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("isStarted", false);
-        editor.apply();
-
+        
         stopForeground(true);
     }
 
