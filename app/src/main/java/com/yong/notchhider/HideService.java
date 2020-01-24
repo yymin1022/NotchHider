@@ -202,7 +202,7 @@ public class HideService extends Service{
         if(notificationBuilder != null && notificationManager != null){
             startForeground(1379, notificationBuilder.build());
         }
-        
+
         return super.onStartCommand(intent, flags, startId);
     }
 
