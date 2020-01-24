@@ -3,6 +3,8 @@
 
     <string name="main_btn_start">Start</string>
     <string name="main_btn_stop">Stop</string>
+    <string name="main_text_off">OFF</string>
+    <string name="main_text_on">ON</string>
 
     <string name="noti_channel_description">This is for Background Notification.</string>
     <string name="noti_channel_id">RunningBackground</string>
